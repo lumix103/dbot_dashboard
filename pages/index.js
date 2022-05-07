@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { parseCookies } from "nookies";
 import DNavbar from "../components/DNavbar";
 function unhideSuggestions(){
   var a = document.getElementById("Suggestions")
@@ -80,12 +81,14 @@ if (f.style.display === "none" && e.style.display === "none") {
 }
 }
 
-export default function Home() {
+export default function Home(props) {
+  console.log('HOME')
+  console.log(props);
   return (
     <div>
       <div className="wrapper">
 
-        <DNavbar/>
+        <DNavbar props={props}/>
         
         <div className="utilities">
           <ul>
@@ -97,13 +100,13 @@ export default function Home() {
         </div>
 
         <a href="https://discord.com/api/oauth2/authorize?client_id=938563118055952405&permissions=8&redirect_uri=https%3A%2F%2Fd-bot.me%2F&response_type=code&scope=identify%20guilds.members.read%20bot%20applications.commands%20applications.builds.read%20applications.store.update%20guilds.join%20guilds" target="_blank">
-          <div class="AddButton">
+          <div className="AddButton">
             Add Bot to Server
           </div>
         </a>
 
         <a href="https://discord.gg/g53YckNsca" target="_blank">
-          <div class="JoinButton">
+          <div className="JoinButton">
             Join Our Discord!
           </div>
         </a>
@@ -152,4 +155,18 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+async function getUser(authorization) {
+  const res = await fetch('http://localhost:3001/user')
+  if(res.status === 200) return {authorization, user: res.data}
+  else return {authorization}
+}
+
+Home.getInitialProps = async (ctx) => {
+  const  {authorization} = parseCookies(ctx);
+  const { token } = ctx.query;
+  const  props = await getUser(authorization || token);
+  console.log(`Fetched: ${props}`)
+  return props;
 }

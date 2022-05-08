@@ -14,7 +14,7 @@ const DNavbar = (props) => {
               <a>Support</a>
           </Link>
           {
-              props.props.authorization ? <a>Logout</a> : <a href="http://localhost:3001/oauth/discord">Login With Discord</a>
+              props.props.authorization ? <Link href="/api/oauth/discord/logout"><a>Logout</a></Link> : <a href="http://localhost:3001/oauth/discord">Login With Discord</a>
           }
           <Link href="/">
               <a>Home</a>

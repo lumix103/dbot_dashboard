@@ -1,10 +1,11 @@
 import Link from "next/link";
 import DNavbar from "../components/DNavbar";
-export default function Tutorial() {
+import { parseCookies } from "nookies";
+export default function Tutorial(props) {
     return (
         <div id ="Home">
             <div className="wrapper">
-                <DNavbar/>
+                <DNavbar props={props}/>
 
             <div className="TUTSideNav">
                 <ul className="TUTList">
@@ -145,3 +146,17 @@ export default function Tutorial() {
         </div>
     )
 }
+
+async function getUser(authorization) {
+    const res = await fetch('http://localhost:3001/user')
+    if(res.status === 200) return {authorization, user: res.data}
+    else return {authorization}
+  }
+  
+  Tutorial.getInitialProps = async (ctx) => {
+    const  {authorization} = parseCookies(ctx);
+    const { token } = ctx.query;
+    const  props = await getUser(authorization || token);
+    console.log(`Fetched: ${props}`)
+    return props;
+  }

@@ -117,30 +117,36 @@ export default function Home(props) {
               {"\n"}
               This feature is still in development and slated for Prototype 2. Stay tuned for more info!
           </div>
-          <div id ="Welcome">Welcome D-Bot. D-bot is a discord bot that is meant to be modular, easy to use and intuitive. Don't worry about prefix conflicts with this bot!</div>
+          <div id ="Welcome">Welcome D-Bot. D-bot is a discord bot that is meant to be modular, easy to use and intuitive. Don't worry about prefix conflicts with this bot!
+          {"\n"}
+          Watch this video if you want to know how to add D-bot to your server!
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/8mcQPXz5q4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
           <div id ="News">
-            4/01/21 Dev Diary 1: Release of Prototype 1.{"\n"}
+            4/30/22 Dev Diary 2: Release of Prototype 2.{"\n"}
             <p style={{textAlign: "left"}}>
-            Greetings everyone! Thomas, head of backend development here. I'm pleased to report that this post marks the merger of the branch prototype 1 with main, and thus, the first iteration of our discord bot D-Bot!{"\n"}
-            Version 1.0's features are vast and too large to simply be summarized within a newspost, but I'll try to do my best!
+            Hey everyone! Thomas, head of backend development, here to deliver the final version of of D-bot. This post marks a milestone in development, as all major goals for features have been or are in the process of being met. We're very excited to showcase some of our newest features.
             {"\n"}
             {"\n"}
-            Commands!
+            First and foremost, thank you to all the QA testers that reveiewed our project and gave us useful feedback that helped out with fixing the bugs and making sure they were in line with our functionality!
             {"\n"}
             {"\n"}
-            D-Bot includes a variety of commands that can be separated into two commands.
+            Here's some of the new features that we have added to the bot~
             {"\n"}
             {"\n"}
-            Moderation Commands!: Swiftly and efficently ban, kick or clear the meassages of rowdy users with extinction-level powers!
+            Two new commands!: Caption and Guess The Name!
             {"\n"}
             {"\n"}
-            User Commands: Answer trivia questions to gain points, or create polls for interesting topics, all without leaving the comfort of discord!
+            Website Improvements: Send us a suggestion sometime! And if you need help, we have the support page!
             {"\n"}
             {"\n"}
-            Built-In Discord Functions: We use button interactions and slash commands to make your experience with D-Bot Seamless!
+            Webhook: Get fresh CSUSB news with the implemented webhook!
             {"\n"}
             {"\n"}
-            And Many more! 
+            Dashboard: Create custom commands to enhance your experience with D-Bot!
+            {"\n"}
+            {"\n"}
+            And many more features! Check our release log on github for more!
           </p>
           </div>
           <div id ="Links">

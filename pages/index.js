@@ -81,14 +81,12 @@ if (f.style.display === "none" && e.style.display === "none") {
 }
 }
 
-export default function Home(props) {
-  console.log('HOME')
-  console.log(props);
+function Home(props) {
   return (
     <div>
       <div className="wrapper">
 
-        <DNavbar props={props}/>
+        <DNavbar props={props.props.props}/>
         
         <div className="utilities">
           <ul>
@@ -113,9 +111,14 @@ export default function Home(props) {
 
         <div className="WelcomeContent">
           <div id ="Suggestions">
-              Have a command idea you'd like to suggest, do so here!{"\n"}
-              {"\n"}
-              This feature is still in development and slated for Prototype 2. Stay tuned for more info!
+            <form action="https://getform.io/f/d762663a-ba40-49ed-b216-1e4535d31898" method="POST">
+                Have a command idea you'd like to suggest, do so here!{"\n"}
+            {"\n"}
+                <textarea rows="20" cols="75" name="Suggestion"></textarea>
+                <br/>
+                <input type="submit" value="Send"/>
+                <button type="reset">Reset Form</button>
+            </form>
           </div>
           <div id ="Welcome">Welcome D-Bot. D-bot is a discord bot that is meant to be modular, easy to use and intuitive. Don't worry about prefix conflicts with this bot!
           {"\n"}
@@ -164,15 +167,35 @@ export default function Home(props) {
 }
 
 async function getUser(authorization) {
-  const res = await fetch('http://localhost:3001/user')
-  if(res.status === 200) return {authorization, user: res.data}
+  const res = await fetch('http://localhost:3001/profile',
+  {
+      method: 'GET',
+      headers: {
+          'authorization' : authorization
+      }
+  });
+  const user = await res.json()
+  console.log("USER HOME_____________________________")
+  console.log(user)
+  if(res.status === 200) return {authorization, user: user}
   else return {authorization}
 }
 
 Home.getInitialProps = async (ctx) => {
   const  {authorization} = parseCookies(ctx);
+  console.log(ctx)
   const { token } = ctx.query;
   const  props = await getUser(authorization || token);
-  console.log(`Fetched: ${props}`)
-  return props;
+  console.log("HOME___________________")
+  console.log(props)
+  if (props.authorization === undefined) {
+    props.authorization = null;
+  }
+  console.log("HOME___________________")
+  console.log(props)
+  return {
+    props: {props}
+  };
 }
+
+export default Home;

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import DNavbar from "../components/DNavbar";
 import { parseCookies } from "nookies";
-export default function Tutorial(props) {
+function Tutorial(props) {
     return (
         <div id ="Home">
             <div className="wrapper">
-                <DNavbar props={props}/>
+                <DNavbar props={props.props.props}/>
 
             <div className="TUTSideNav">
                 <ul className="TUTList">
@@ -27,6 +27,8 @@ export default function Tutorial(props) {
                     <a href="#Level"><li id="sub_subsection">Level</li></a>
                     <a href="#Trivia"><li id="sub_subsection">Trivia</li></a>
                     <a href="#Poll"><li id="sub_subsection">Poll</li></a>
+                    <a href="#Caption"><li id="sub_subsection">Caption</li></a>
+                    <a href="#Guess"><li id="sub_subsection">Guess the Word</li></a>
                     <a href="#NewSlash"><li>Creating new slash commands</li></a>
                     <a href="#Support"><li>Support</li></a>
                 </ul>
@@ -34,7 +36,7 @@ export default function Tutorial(props) {
 
             <div className="TutorialBox">
                 <img src="https://raw.githubusercontent.com/ThomasCross257/CSEBot-Project/prototype_1/res/D-BotLogo2.png" id="D-botTut"/>
-                <h1>CSEBot - D-Bot Version 1.00 (Steg)</h1>
+                <h1>CSEBot - D-Bot Version 1.01 (Tyran)</h1>
                 <h2 id="GettingStarted">Getting Started</h2>
                 <h3 id="AddingBot">Adding the bot normally</h3>
                 <p>This is the most basic and straightforward of options for adding D-Bot to your server. You have two options in this case, through the URL on our website or though discord itself!</p>
@@ -110,7 +112,11 @@ export default function Tutorial(props) {
         <h4 id="Trivia">Trivia</h4>
         <p>Sit back, relax and play a game of trivia with this command. Upon being called, this command will generate multiple-choice trivia questions of varying difficulty. Correct answers will increase your overall EXP!</p>
         <h4 id="Poll">Poll</h4>
-        <p>Will create a poll in discord with up to four options. The poll will end after a specified amount of minutes by the user with 1 being the shortest. Results are only visible after the </p>
+        <p>Will create a poll in discord with up to four options. The poll will end after a specified amount of minutes by the user with 1 being the shortest. Results are only visible after the alloted time has expired.</p>
+        <h4 id="Caption">Caption</h4>
+        <p>Captions an image in impact font style. Create ironic memes without ever having to leave discord!</p>
+        <h4 id="Guess">Guess the Word</h4>
+        <p>Guess the word is simply a game where you can guess the word to any statement. Get it right and you'll earn points to help level up!</p> 
         <h2 id="NewSlash">Creating new slash commands</h2>
         <p>If you by chance used the instructions above to build the bot manually, you will no doubt want to build your own slash commands.</p>
         <p>In the commands directory, create a file, and name it something like [insertcommandname].js. (Note: Do not use spaces in the creation of commands)</p> 
@@ -148,15 +154,28 @@ export default function Tutorial(props) {
 }
 
 async function getUser(authorization) {
-    const res = await fetch('http://localhost:3001/user')
-    if(res.status === 200) return {authorization, user: res.data}
+    const res = await fetch('http://localhost:3001/profile',
+    {
+        method: 'GET',
+        headers: {
+            'authorization' : authorization
+        }
+    });
+    const user = await res.json()
+    if(res.status === 200) return {authorization, user: user}
     else return {authorization}
-  }
-  
-  Tutorial.getInitialProps = async (ctx) => {
+}
+
+Tutorial.getInitialProps = async (ctx) => {
+    console.log(ctx);
     const  {authorization} = parseCookies(ctx);
     const { token } = ctx.query;
     const  props = await getUser(authorization || token);
-    console.log(`Fetched: ${props}`)
-    return props;
-  }
+    if (props.authorization === undefined) {
+        props.authorization = null;
+      }
+    return {
+        props: {props}
+    };
+}
+ export default Tutorial

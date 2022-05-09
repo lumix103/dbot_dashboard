@@ -1,7 +1,5 @@
 import Link from 'next/link'
 const DNavbar = (props) => {
-    console.log('Dnavbar')
-    console.log(props)
     return (
         <div className="navbar">
           <Link href="/dashboard">
